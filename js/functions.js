@@ -1,27 +1,27 @@
-function isCreaterThanLength(string, length){
-  if (string.length<=length){
-    return true;
-  } else {
-    return false;
-  }
-}
-isCreaterThanLength();
+const isCreaterThanLength = (string, length) => (string.length<=length);
+// Строка короче 5 символов
+isCreaterThanLength('abc',5); //true
+// Стркоа равна 5 символам
+isCreaterThanLength('abcde'); //true
+// Сттрока длиннее 5 символов
+isCreaterThanLength('abcdef',5); //false
 
 function isPalindrome(string){
-  string=string.replaceAll(' ', '');
-  string=string.toLowerCase();
-  let newWord=''; //2
-
+  string=string.replaceAll(' ', '').toLowerCase();
+  let backwardWord='';
   for(let i=string.length-1; i>=0; i--)
   {
-    newWord+=string[i];
+    backwardWord+=string[i];
   }
 
-  if(string===newWord){
-    return true;
-  }
-  else {
-    return false;
-  }
+  return (backwardWord===string);
 }
-isPalindrome();
+// Строка является палиндромом
+isPalindrome('топот'); //true
+// Несмотря на разный регистр, тоже палиндром
+isPalindrome('довОд'); //true
+// Не палиндром
+isPalindrome('Саша'); //true
+// Палиндром
+isPalindrome('Леша на полке клопа нашел'); //true
+
