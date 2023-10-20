@@ -1,9 +1,4 @@
 const COUNT_PHOTOS = 25;
-const Id = {
-  MIN: 1,
-  MAX_PHOTO: 25,
-  MAX_COMMENT: 1000
-};
 const CommentsCount = {
   MIN: 0,
   MAX: 30
@@ -61,34 +56,25 @@ const getRandomNumber = (min, max) => {
   return Math.floor(result);
 };
 
-const createRandomIdFromRangeGenerator = (min, max) => {
-  const previousValues = [];
+const createIdGenerator = () => {
+  let lastGeneratedId = 0;
 
   return function () {
-    let currentValue = getRandomNumber(min, max);
-    while (previousValues.includes(currentValue)) {
-      currentValue = getRandomNumber(min, max);
-    }
-    previousValues.push(currentValue);
-    return currentValue;
+    lastGeneratedId += 1;
+    return lastGeneratedId;
   };
 };
 
-const generatePhotoDescriptionId = createRandomIdFromRangeGenerator(Id.MIN,Id.MAX_PHOTO);
-const generateImageId = createRandomIdFromRangeGenerator(Id.MIN,Id.MAX_PHOTO);
-const generateCommentId = createRandomIdFromRangeGenerator(Id.MIN,Id.MAX_COMMENT);
+const descriptionId = createIdGenerator();
+const photoId = createIdGenerator();
+const commentId = createIdGenerator();
 
-const getTextForComment = () => {
-  let string = '';
-  for (let i=0; i<getRandomNumber(MessagesCount.MIN, MessagesCount.MAX); i++){
-    string = string + TEXT_FOR_COMMENTS[getRandomNumber(0, TEXT_FOR_COMMENTS.length-1)];
-  }
-
-  return string;
-};
+const getTextForComment = () => Array.from(
+  { length: getRandomNumber (MessagesCount.MIN, MessagesCount.MAX) },
+  () => (TEXT_FOR_COMMENTS[getRandomNumber(0,TEXT_FOR_COMMENTS.length-1)])).join(' ');
 
 const getComment = () => ({
-  id: generateCommentId(Id.MIN,Id.MAX_COMMENT),
+  id: commentId(),
   avatar: `img/avatar-${getRandomNumber(AvatarId.MIN,AvatarId.MAX)}.svg`,
   message: getTextForComment(),
   name: COMMENTATOR_NAMES[getRandomNumber(0,COMMENTATOR_NAMES.length-1)]
@@ -96,8 +82,8 @@ const getComment = () => ({
 });
 
 const getPhotoDescription = () => ({
-  id: generatePhotoDescriptionId(Id.MIN,Id.MAX_PHOTO),
-  url: `photos/${generateImageId(Id.MIN,Id.MAX_PHOTO)}.jpg`,
+  id: descriptionId(),
+  url: `photos/${photoId()}.jpg`,
   description: PHOTO_DESCRIPTIONS[getRandomNumber(0,PHOTO_DESCRIPTIONS.length-1)],
   likes: getRandomNumber(LikesCount.MIN, LikesCount.MAX),
   comments: Array.from({length: getRandomNumber(CommentsCount.MIN, CommentsCount.MAX)}, getComment)
@@ -106,5 +92,5 @@ const getPhotoDescription = () => ({
 
 const getPhotos = () => Array.from({length:COUNT_PHOTOS}, getPhotoDescription);
 
-getPhotos();
+(getPhotos());
 
