@@ -78,7 +78,6 @@ const getComment = () => ({
   avatar: `img/avatar-${getRandomNumber(AvatarId.MIN,AvatarId.MAX)}.svg`,
   message: getTextForComment(),
   name: COMMENTATOR_NAMES[getRandomNumber(0,COMMENTATOR_NAMES.length-1)]
-
 });
 
 const getPhotoDescription = () => ({
@@ -87,10 +86,9 @@ const getPhotoDescription = () => ({
   description: PHOTO_DESCRIPTIONS[getRandomNumber(0,PHOTO_DESCRIPTIONS.length-1)],
   likes: getRandomNumber(LikesCount.MIN, LikesCount.MAX),
   comments: Array.from({length: getRandomNumber(CommentsCount.MIN, CommentsCount.MAX)}, getComment)
-
 });
 
 const getPhotos = () => Array.from({length:COUNT_PHOTOS}, getPhotoDescription);
 
-(getPhotos());
+getPhotos();
 
