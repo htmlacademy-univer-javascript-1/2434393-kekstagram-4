@@ -25,7 +25,8 @@ const COMMENTATOR_NAMES = [
   'Виктор',
   'Виктория',
   'Светлана',
-  'Галина'
+  'Галина',
+  'Герман'
 ];
 const PHOTO_DESCRIPTIONS = [
   'Осенний сад',
