@@ -44,13 +44,9 @@ const isPossibleMeeting = (timeStartWorkingDay, timeEndWorkingDay, timeAppointme
   timeEndWorkingDay = getSeconds(timeEndWorkingDay);
   timeAppointment = getSeconds(timeAppointment);
   appointmentDuration = getSeconds(appointmentDuration);
-  if (timeStartWorkingDay <= timeAppointment && timeAppointment <= timeEndWorkingDay &&
-    (timeAppointment + appointmentDuration) <= timeEndWorkingDay) {
 
-    return true;
-  }
-
-  return false;
+  return (timeStartWorkingDay <= timeAppointment && timeAppointment <= timeEndWorkingDay &&
+    (timeAppointment + appointmentDuration) <= timeEndWorkingDay);
 };
 
 isPossibleMeeting('08:00', '17:30', '14:00', 90); //true
