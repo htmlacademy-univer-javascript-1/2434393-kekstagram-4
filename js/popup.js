@@ -11,7 +11,7 @@ userPhotos.forEach((userPhoto) => {
   picture.src = userPhoto.url;
   picture.alt = userPhoto.description;
   userPhotoElement.querySelector('.picture__likes').textContent = userPhoto.likes;
-  userPhotoElement.querySelector('.picture__comments').textContent = userPhoto.comments;
+  userPhotoElement.querySelector('.picture__comments').textContent = userPhoto.comments.length;
   similarUserPhotos.appendChild(userPhotoElement);
 });
 
