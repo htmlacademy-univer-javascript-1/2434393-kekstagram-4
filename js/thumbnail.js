@@ -13,12 +13,14 @@ const createThumbnail = ( { url, description, likes, comments } ) => {
 
 const renderThumbnails = (userPhotos) => {
   const fragment = document.createDocumentFragment();
-  userPhotos.forEach((userPhoto) => {
+  userPhotos.forEach((userPhoto,index) => {
     const thumbnail =  createThumbnail(userPhoto);
+    thumbnail.dataset.id = index + 1;
     fragment.appendChild(thumbnail);
   });
 
   container.appendChild(fragment);
 };
+
 
 export { renderThumbnails };
