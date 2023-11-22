@@ -1,7 +1,6 @@
 import { getPhotos } from './data.js';
-import { renderThumbnails } from './thumbnail.js';
+import { renderGallery } from './view-popup.js';
 
-const photos = getPhotos();
-renderThumbnails(photos);
+renderGallery(getPhotos());
 
-export { photos };
+
