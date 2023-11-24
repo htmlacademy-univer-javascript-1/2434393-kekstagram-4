@@ -2,11 +2,11 @@ import { isEscapeKey } from './utils.js';
 
 const bigPictureElement = document.querySelector('.big-picture');
 const commentsList = document.querySelector('.social__comments');
-const commentCountElement = document.querySelector('.social__comment-count');
 const commentListElement = commentsList.querySelector('.social__comment');
-const commentsLoaderElement = document.querySelector('.comments-loader');
 const bodyElement = document.querySelector('body');
 const cancelButtonElement = document.querySelector('.big-picture__cancel');
+const commentCountElement = document.querySelector('.social__comment-count');
+const commentsLoaderElement = document.querySelector('.comments-loader');
 
 const createComment = ( {avatar, name, message} ) => {
   const comment = commentListElement.cloneNode(true);
