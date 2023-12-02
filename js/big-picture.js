@@ -25,17 +25,17 @@ let commentsShown = 0;
 let comments = null;
 
 const renderComments = () => {
-  commentsList.innerHTML='';
+  commentsList.innerHTML = '';
 
   commentsShown += PORTION_COMMENTS_SHOWN;
-  if(commentsShown >= comments.length){
+  if (commentsShown >= comments.length) {
     commentsShown = comments.length;
     commentsLoaderElement.classList.add('hidden');
   }
   else {
     commentsLoaderElement.classList.remove('hidden');
   }
-  for(let i=0; i<commentsShown; i++){
+  for (let i = 0; i < commentsShown; i++) {
     const comment = createComment(comments[i]);
     commentsList.appendChild(comment);
   }
