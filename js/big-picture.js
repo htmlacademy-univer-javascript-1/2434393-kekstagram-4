@@ -2,14 +2,14 @@ import { isEscapeKey } from './utils.js';
 
 const PORTION_COMMENTS_SHOWN = 5;
 
-const bigPictureElement = document.querySelector('.big-picture');
-const commentsList = document.querySelector('.social__comments');
-const commentListElement = commentsList.querySelector('.social__comment');
 const bodyElement = document.querySelector('body');
-const cancelButtonElement = document.querySelector('.big-picture__cancel');
-const totalCommentsElement = document.querySelector('.comments-count');
-const commentsShownElement = document.querySelector('.comments-shown');
-const commentsLoaderElement = document.querySelector('.comments-loader');
+const bigPictureElement = bodyElement.querySelector('.big-picture');
+const commentsList = bodyElement.querySelector('.social__comments');
+const commentListElement = bodyElement.querySelector('.social__comment');
+const cancelButtonElement = bodyElement.querySelector('.big-picture__cancel');
+const totalCommentsElement = bodyElement.querySelector('.comments-count');
+const commentsShownElement = bodyElement.querySelector('.comments-shown');
+const commentsLoaderElement = bodyElement.querySelector('.comments-loader');
 
 const createComment = ( {avatar, name, message} ) => {
   const comment = commentListElement.cloneNode(true);
