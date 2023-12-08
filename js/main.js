@@ -1,6 +1,10 @@
 import { getPhotos } from './data.js';
 import { renderGallery } from './gallery.js';
+import { openEditPopup } from './edit-popup.js';
 
-renderGallery(getPhotos());
+const photos = getPhotos();
+
+renderGallery(photos);
+openEditPopup();
 
 
