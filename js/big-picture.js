@@ -31,8 +31,7 @@ const renderComments = () => {
   if (commentsShown >= comments.length) {
     commentsShown = comments.length;
     commentsLoaderElement.classList.add('hidden');
-  }
-  else {
+  } else {
     commentsLoaderElement.classList.remove('hidden');
   }
   for (let i = 0; i < commentsShown; i++) {
@@ -81,7 +80,6 @@ const showBigPicture = (data) => {
   document.addEventListener('keydown', onDocumentKeydown);
   cancelButtonElement.addEventListener('click', onCancelButtonClick);
   commentsLoaderElement.addEventListener('click', onCommentsLoaderElementClick);
-
   renderPictureDetails(data);
   comments = data.comments.slice();
   renderComments(comments);
