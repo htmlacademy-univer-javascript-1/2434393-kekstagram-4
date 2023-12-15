@@ -64,6 +64,7 @@ const hideForm = (shouldResetForm = true) => {
   effectMarvinButton.removeEventListener('change', onEffectMarvinButtonChange);
   effectPhobosButton.removeEventListener('change', onEffectPhobosButtonChange);
   effectHeatButton.removeEventListener('change', onEffectHeatButtonChange);
+  imageLoadingField.value = '';
   if(shouldResetForm){
     form.reset();
     pristine.reset();
