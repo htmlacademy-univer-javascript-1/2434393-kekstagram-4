@@ -1,4 +1,5 @@
 import { isEscapeKey } from './utils.js';
+import { onDocumentKeydown as onDocumentKeydownEditPopup} from './edit-popup.js';
 
 const bodyElement = document.querySelector('body');
 const successMessage = bodyElement.querySelector('#success').content.querySelector('.success');
@@ -8,6 +9,7 @@ const hideMessage = () => {
   const messageElement = bodyElement.querySelector('.success') || bodyElement.querySelector('.error');
   messageElement.remove();
   document.removeEventListener('keydown', onDocumentKeydown);
+  document.addEventListener('keydown', onDocumentKeydownEditPopup);
   bodyElement.removeEventListener('click', onBodyElementClick);
 };
 
@@ -16,6 +18,7 @@ function onDocumentKeydown (evt) {
     evt.preventDefault();
     hideMessage();
   }
+
 }
 
 function onBodyElementClick (evt) {
@@ -30,6 +33,7 @@ function onBodyElementClick (evt) {
 const showMessage = (messageElement, closeButtonClass) => {
   bodyElement.append(messageElement);
   document.addEventListener('keydown', onDocumentKeydown);
+  document.removeEventListener('keydown', onDocumentKeydownEditPopup);
   bodyElement.addEventListener('click', onBodyElementClick);
   messageElement.querySelector(closeButtonClass).addEventListener('click', hideMessage);
 };
