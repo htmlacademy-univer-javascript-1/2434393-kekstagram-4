@@ -1,10 +1,19 @@
-import { getPhotos } from './data.js';
 import { renderGallery } from './gallery.js';
-import { openEditPopup } from './edit-popup.js';
+import { openEditPopup, setFormSubmit, hideForm } from './edit-popup.js';
+import {getData} from './api.js';
+import { showAlert } from './utils.js';
 
-const photos = getPhotos();
+getData()
+  .then((thumbnails) => {
+    renderGallery(thumbnails);
+  })
+  .catch(
+    (err) => {
+      showAlert(err.message);
+    }
+  );
 
-renderGallery(photos);
+setFormSubmit(hideForm);
+
 openEditPopup();
-
 
