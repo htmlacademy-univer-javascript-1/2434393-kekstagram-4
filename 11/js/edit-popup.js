@@ -51,7 +51,7 @@ const showForm = () => {
   effectHeatButton.addEventListener('change', onEffectHeatButtonChange);
 };
 
-const hideForm = (shouldResetForm = true) => {
+const hideForm = () => {
   editForm.classList.add('hidden');
   documentBody.classList.remove('modal-open');
   document.removeEventListener('keydown', onDocumentKeydown);
@@ -64,13 +64,10 @@ const hideForm = (shouldResetForm = true) => {
   effectMarvinButton.removeEventListener('change', onEffectMarvinButtonChange);
   effectPhobosButton.removeEventListener('change', onEffectPhobosButtonChange);
   effectHeatButton.removeEventListener('change', onEffectHeatButtonChange);
-  imageLoadingField.value = '';
-  if(shouldResetForm){
-    form.reset();
-    pristine.reset();
-    resetScale();
-    resetEffect();
-  }
+  form.reset();
+  pristine.reset();
+  resetScale();
+  resetEffect();
 };
 
 const extarctHastag = (value) => value.trim().split(' ').filter((element) => element.length > 0);
@@ -133,7 +130,6 @@ const setFormSubmit = (onSuccess) => {
         .then(onSuccess)
         .then(showSuccessMessage)
         .catch(()=>{
-          hideForm(false);
           showErrorMessage();
         }
         )
@@ -141,5 +137,4 @@ const setFormSubmit = (onSuccess) => {
     }
   });
 };
-
-export { openEditPopup, setFormSubmit, hideForm };
+export { openEditPopup, setFormSubmit, hideForm, onDocumentKeydown };
