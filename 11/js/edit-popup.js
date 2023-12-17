@@ -1,14 +1,12 @@
 import { isEscapeKey } from './utils.js';
-import { resetEffect, onEffectNoneButtonChange, onEffectChromeButtonChange,
-  onEffectSepiaButtonChange, onEffectMarvinButtonChange, onEffectPhobosButtonChange,
-  onEffectHeatButtonChange } from './effect-image.js';
-import { resetScale, onMinusSizeButtonCLick, onPlusSizeButtonClick } from './scale-image.js';
-import {sendData} from './api.js';
+import { resetEffectImage, setupEffectImage, removeEffectImage } from './effect-image.js';
+import { resetScaleImage, setupScaleImage, removeScaleImage } from './scale-image.js';
+import { sendData } from './api.js';
 import { showSuccessMessage, showErrorMessage } from './upload-status-message.js';
 
 const MAX_COUNT_HASHTAG = 5;
 const HASTAG_REGEX = /^#[a-zа-яё0-9]{1,19}$/i;
-const submitButtonText = {
+const SubmitButtonText = {
   IDLE: 'Опубликовать',
   SENDING: 'Отправляю...'
 };
@@ -20,14 +18,6 @@ const closeButton = form.querySelector('.img-upload__cancel');
 const imageLoadingField = form.querySelector('.img-upload__input ');
 const hashtagField = form.querySelector('.text__hashtags');
 const commentField = form.querySelector('.text__description');
-const minusSizeButton = documentBody.querySelector('.scale__control--smaller');
-const plusSizeButton = documentBody.querySelector('.scale__control--bigger');
-const effectNoneButton = documentBody.querySelector('#effect-none');
-const effectChromeButton = documentBody.querySelector('#effect-chrome');
-const effectSepiaButton = documentBody.querySelector('#effect-sepia');
-const effectMarvinButton = documentBody.querySelector('#effect-marvin');
-const effectPhobosButton = documentBody.querySelector('#effect-phobos');
-const effectHeatButton = documentBody.querySelector('#effect-heat');
 const submitButton = documentBody.querySelector('.img-upload__submit');
 
 const pristine = new Pristine (form, {
@@ -41,14 +31,8 @@ const showForm = () => {
   documentBody.classList.add('modal-open');
   document.addEventListener('keydown', onDocumentKeydown);
   closeButton.addEventListener('click', onCloseButtonClick);
-  plusSizeButton.addEventListener('click', onPlusSizeButtonClick);
-  minusSizeButton.addEventListener('click', onMinusSizeButtonCLick);
-  effectNoneButton.addEventListener('change', onEffectNoneButtonChange);
-  effectChromeButton.addEventListener('change', onEffectChromeButtonChange);
-  effectSepiaButton.addEventListener('change', onEffectSepiaButtonChange);
-  effectMarvinButton.addEventListener('change', onEffectMarvinButtonChange);
-  effectPhobosButton.addEventListener('change', onEffectPhobosButtonChange);
-  effectHeatButton.addEventListener('change', onEffectHeatButtonChange);
+  setupScaleImage();
+  setupEffectImage();
 };
 
 const hideForm = () => {
@@ -56,18 +40,12 @@ const hideForm = () => {
   documentBody.classList.remove('modal-open');
   document.removeEventListener('keydown', onDocumentKeydown);
   closeButton.removeEventListener('click', onCloseButtonClick);
-  plusSizeButton.removeEventListener('click', onPlusSizeButtonClick);
-  minusSizeButton.removeEventListener('click', onMinusSizeButtonCLick);
-  effectNoneButton.removeEventListener('change', onEffectNoneButtonChange);
-  effectChromeButton.removeEventListener('change', onEffectChromeButtonChange);
-  effectSepiaButton.removeEventListener('change', onEffectSepiaButtonChange);
-  effectMarvinButton.removeEventListener('change', onEffectMarvinButtonChange);
-  effectPhobosButton.removeEventListener('change', onEffectPhobosButtonChange);
-  effectHeatButton.removeEventListener('change', onEffectHeatButtonChange);
+  removeScaleImage();
+  removeEffectImage();
   form.reset();
   pristine.reset();
-  resetScale();
-  resetEffect();
+  resetScaleImage();
+  resetEffectImage();
 };
 
 const extarctHastag = (value) => value.trim().split(' ').filter((element) => element.length > 0);
@@ -112,12 +90,12 @@ const openEditPopup = () => {
 
 const blockSubmitButton = () => {
   submitButton.disabled = true;
-  submitButton.textContent = submitButtonText.SENDING;
+  submitButton.textContent = SubmitButtonText.SENDING;
 };
 
 const unblockSubmitButton = () => {
   submitButton.disabled = false;
-  submitButton.textContent = submitButtonText.IDLE;
+  submitButton.textContent = SubmitButtonText.IDLE;
 };
 
 const setFormSubmit = (onSuccess) => {
@@ -137,4 +115,5 @@ const setFormSubmit = (onSuccess) => {
     }
   });
 };
+
 export { openEditPopup, setFormSubmit, hideForm, onDocumentKeydown };
