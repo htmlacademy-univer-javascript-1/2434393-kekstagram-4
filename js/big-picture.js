@@ -2,14 +2,14 @@ import { isEscapeKey } from './utils.js';
 
 const PORTION_COMMENTS_SHOWN = 5;
 
-const bodyElement = document.querySelector('body');
-const bigPictureElement = bodyElement.querySelector('.big-picture');
-const commentsList = bodyElement.querySelector('.social__comments');
-const commentListElement = bodyElement.querySelector('.social__comment');
-const cancelButtonElement = bodyElement.querySelector('.big-picture__cancel');
-const totalCommentsElement = bodyElement.querySelector('.comments-count');
-const commentsShownElement = bodyElement.querySelector('.comments-shown');
-const commentsLoaderElement = bodyElement.querySelector('.comments-loader');
+const documentBody = document.querySelector('body');
+const bigPictureElement = documentBody.querySelector('.big-picture');
+const commentsList = documentBody.querySelector('.social__comments');
+const commentListElement = documentBody.querySelector('.social__comment');
+const cancelButtonElement = documentBody.querySelector('.big-picture__cancel');
+const totalCommentsElement = documentBody.querySelector('.comments-count');
+const commentsShownElement = documentBody.querySelector('.comments-shown');
+const commentsLoaderElement = documentBody.querySelector('.comments-loader');
 
 const createComment = ( {avatar, name, message} ) => {
   const comment = commentListElement.cloneNode(true);
@@ -48,7 +48,7 @@ const onCommentsLoaderElementClick = () => {
 
 const hideBigPicture = () => {
   bigPictureElement.classList.add('hidden');
-  bodyElement.classList.remove('modal-open');
+  documentBody.classList.remove('modal-open');
   document.removeEventListener('keydown', onDocumentKeydown);
   cancelButtonElement.removeEventListener('click', onCancelButtonClick);
   commentsLoaderElement.removeEventListener('click', onCommentsLoaderElementClick);
@@ -75,7 +75,7 @@ const renderPictureDetails = ( { url, likes, description} ) => {
 
 const showBigPicture = (data) => {
   bigPictureElement.classList.remove('hidden');
-  bodyElement.classList.add('modal-open');
+  documentBody.classList.add('modal-open');
   commentsLoaderElement.classList.add('hidden');
   document.addEventListener('keydown', onDocumentKeydown);
   cancelButtonElement.addEventListener('click', onCancelButtonClick);

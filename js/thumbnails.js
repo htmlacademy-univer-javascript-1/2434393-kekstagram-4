@@ -13,6 +13,7 @@ const createThumbnail = ( { url, description, likes, comments, id } ) => {
 };
 
 const renderThumbnails = (userPhotos) => {
+  container.querySelectorAll('.picture').forEach((thumbnail)=>{ thumbnail.remove(); });
   const fragment = document.createDocumentFragment();
   userPhotos.forEach((userPhoto) => {
     const thumbnail =  createThumbnail(userPhoto);
