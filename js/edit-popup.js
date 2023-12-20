@@ -19,7 +19,8 @@ const imageLoadingField = form.querySelector('.img-upload__input ');
 const hashtagField = form.querySelector('.text__hashtags');
 const commentField = form.querySelector('.text__description');
 const submitButton = documentBody.querySelector('.img-upload__submit');
-//const imageElement = documentBody.querySelector('.my-image-js');
+const imageElement = documentBody.querySelector('.my-image-js');
+const effectsPreviews = documentBody.querySelectorAll('.effects__preview ');
 
 const pristine = new Pristine (form, {
   classTo: 'img-upload__field-wrapper',
@@ -77,7 +78,10 @@ const onImageLoadingFieldChange = (evt) => {
   const selectedFiel = imageLoadingField.files[0];
   if(selectedFiel.type.startsWith('image/') || /\.(jpg|jpeg|png|gif)$/i.test(selectedFiel.name)){
     showForm();
-    //imageElement.src = URL.createObjectURL(selectedFiel);
+    imageElement.src = URL.createObjectURL(selectedFiel);
+    effectsPreviews.forEach((picture)=>{
+      picture.style.backgroundImage = `url('${imageElement.src}')`;
+    });
   }
 };
 
