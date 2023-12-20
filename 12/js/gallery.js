@@ -2,6 +2,7 @@ import { showBigPicture } from './big-picture.js';
 import { renderThumbnails } from './thumbnails.js';
 
 const container = document.querySelector('.pictures');
+
 let pictures = [];
 
 const onContainerClick = (evt) => {
