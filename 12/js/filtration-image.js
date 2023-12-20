@@ -1,6 +1,6 @@
 const RANDOM_NUMBER_PHOTOS = 10;
 const ACTIVE_FILTER_CLASS = 'img-filters__button--active';
-const HIDDEN_CONTAINER_CLASS = 'img-filters--inactive'
+const HIDDEN_CONTAINER_CLASS = 'img-filters--inactive';
 
 const Filter = {
   DEFAULT: 'filter-default',
