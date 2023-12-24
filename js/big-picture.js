@@ -2,18 +2,20 @@ import { isEscapeKey } from './utils.js';
 
 const PORTION_COMMENTS_SHOWN = 5;
 
-const documentBody = document.querySelector('body');
-const bigPictureElement = documentBody.querySelector('.big-picture');
-const commentsList = documentBody.querySelector('.social__comments');
-const commentListElement = documentBody.querySelector('.social__comment');
-const cancelButtonElement = documentBody.querySelector('.big-picture__cancel');
-const totalCommentsElement = documentBody.querySelector('.comments-count');
-const commentsShownElement = documentBody.querySelector('.comments-shown');
-const commentsLoaderElement = documentBody.querySelector('.comments-loader');
+const documentBodyElement = document.querySelector('body');
+const bigPictureElement = documentBodyElement.querySelector('.big-picture');
+const commentsListElement = documentBodyElement.querySelector('.social__comments');
+const commentListElement = documentBodyElement.querySelector('.social__comment');
+const cancelButtonElement = documentBodyElement.querySelector('.big-picture__cancel');
+const totalCommentsElement = documentBodyElement.querySelector('.comments-count');
+const commentsShownElement = documentBodyElement.querySelector('.comments-shown');
+const commentsLoaderElement = documentBodyElement.querySelector('.comments-loader');
 
-const createComment = ( {avatar, name, message} ) => {
+let commentsShown = 0;
+let comments = null;
+
+const createComment = ({avatar, name, message}) => {
   const comment = commentListElement.cloneNode(true);
-
   comment.querySelector('.social__picture').src = avatar;
   comment.querySelector('.social__picture').alt = name;
   comment.querySelector('.social__text').textContent = message;
@@ -21,22 +23,21 @@ const createComment = ( {avatar, name, message} ) => {
   return comment;
 };
 
-let commentsShown = 0;
-let comments = null;
 
 const renderComments = () => {
-  commentsList.innerHTML = '';
-
+  commentsListElement.innerHTML = '';
   commentsShown += PORTION_COMMENTS_SHOWN;
+
   if (commentsShown >= comments.length) {
     commentsShown = comments.length;
     commentsLoaderElement.classList.add('hidden');
   } else {
     commentsLoaderElement.classList.remove('hidden');
   }
+
   for (let i = 0; i < commentsShown; i++) {
     const comment = createComment(comments[i]);
-    commentsList.appendChild(comment);
+    commentsListElement.appendChild(comment);
   }
   commentsShownElement.textContent = commentsShown;
   totalCommentsElement.textContent = comments.length;
@@ -48,25 +49,26 @@ const onCommentsLoaderElementClick = () => {
 
 const hideBigPicture = () => {
   bigPictureElement.classList.add('hidden');
-  documentBody.classList.remove('modal-open');
+  documentBodyElement.classList.remove('modal-open');
   document.removeEventListener('keydown', onDocumentKeydown);
-  cancelButtonElement.removeEventListener('click', onCancelButtonClick);
+  cancelButtonElement.removeEventListener('click', onCancelButtonElementClick);
   commentsLoaderElement.removeEventListener('click', onCommentsLoaderElementClick);
   commentsShown = 0;
 };
 
 function onDocumentKeydown (evt) {
+
   if (isEscapeKey(evt)) {
     evt.preventDefault();
     hideBigPicture();
   }
 }
 
-function onCancelButtonClick () {
+function onCancelButtonElementClick () {
   hideBigPicture();
 }
 
-const renderPictureDetails = ( { url, likes, description} ) => {
+const renderPictureDetails = ({url, likes, description}) => {
   bigPictureElement.querySelector('.big-picture__img').querySelector('img').src = url;
   bigPictureElement.querySelector('.big-picture__img').alt = description;
   bigPictureElement.querySelector('.likes-count').textContent = likes;
@@ -75,10 +77,10 @@ const renderPictureDetails = ( { url, likes, description} ) => {
 
 const showBigPicture = (data) => {
   bigPictureElement.classList.remove('hidden');
-  documentBody.classList.add('modal-open');
+  documentBodyElement.classList.add('modal-open');
   commentsLoaderElement.classList.add('hidden');
   document.addEventListener('keydown', onDocumentKeydown);
-  cancelButtonElement.addEventListener('click', onCancelButtonClick);
+  cancelButtonElement.addEventListener('click', onCancelButtonElementClick);
   commentsLoaderElement.addEventListener('click', onCommentsLoaderElementClick);
   renderPictureDetails(data);
   comments = data.comments.slice();

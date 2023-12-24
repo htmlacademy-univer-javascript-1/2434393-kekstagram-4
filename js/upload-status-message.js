@@ -1,16 +1,16 @@
 import { isEscapeKey } from './utils.js';
 import { onDocumentKeydown as onDocumentKeydownEditPopup} from './edit-popup.js';
 
-const documentBody = document.querySelector('body');
-const successMessage = documentBody.querySelector('#success').content.querySelector('.success');
-const errorMessage = documentBody.querySelector('#error').content.querySelector('.error');
+const documentBodyElement = document.querySelector('body');
+const successMessageElement = documentBodyElement.querySelector('#success').content.querySelector('.success');
+const errorMessageElement = documentBodyElement.querySelector('#error').content.querySelector('.error');
 
 const hideMessage = () => {
-  const messageElement = documentBody.querySelector('.success') || documentBody.querySelector('.error');
+  const messageElement = documentBodyElement.querySelector('.success') || documentBodyElement.querySelector('.error');
   messageElement.remove();
   document.removeEventListener('keydown', onDocumentKeydown);
   document.addEventListener('keydown', onDocumentKeydownEditPopup);
-  documentBody.removeEventListener('click', onBodyElementClick);
+  documentBodyElement.removeEventListener('click', onDocumentBodyElementClick);
 };
 
 function onDocumentKeydown (evt) {
@@ -18,32 +18,38 @@ function onDocumentKeydown (evt) {
     evt.preventDefault();
     hideMessage();
   }
-
 }
 
-function onBodyElementClick (evt) {
+function onDocumentBodyElementClick (evt) {
   evt.preventDefault();
+
   if (evt.target.closest('.success__inner') ||
   evt.target.closest('.error__inner')) {
     return;
   }
+
   hideMessage();
 }
 
+const onMessageElementClick = (evt) => {
+  evt.preventDefault();
+  hideMessage();
+};
+
 const showMessage = (messageElement, closeButtonClass) => {
-  documentBody.append(messageElement);
+  documentBodyElement.append(messageElement);
   document.addEventListener('keydown', onDocumentKeydown);
   document.removeEventListener('keydown', onDocumentKeydownEditPopup);
-  documentBody.addEventListener('click', onBodyElementClick);
-  messageElement.querySelector(closeButtonClass).addEventListener('click', hideMessage);
+  documentBodyElement.addEventListener('click', onDocumentBodyElementClick);
+  messageElement.querySelector(closeButtonClass).addEventListener('click', onMessageElementClick);
 };
 
 const showSuccessMessage = () => {
-  showMessage(successMessage, '.success__button');
+  showMessage(successMessageElement, '.success__button');
 };
 
 const showErrorMessage = () => {
-  showMessage(errorMessage, '.error__button');
+  showMessage(errorMessageElement, '.error__button');
 };
 
 export { showSuccessMessage, showErrorMessage };
